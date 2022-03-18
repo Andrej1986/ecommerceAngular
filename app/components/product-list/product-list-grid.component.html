@@ -1,0 +1,83 @@
+<div class="main-content">
+    <h3 class="text-center">{{productCategoryName}}</h3>
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <div class="header-pagination">
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-9" style="padding-left: 30%">
+                                <ngb-pagination [(page)]="thePageNumber" [pageSize]="thePageSize" [maxSize]="5"
+                                    [collectionSize]="theTotalElements" (pageChange)="listProducts()">
+
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3" *ngFor="let product of products">
+                    <div class="product-box">
+                        <a>
+                            <img routerLink="/product/{{product.id}}" src="{{product.imageUrl}}" class="img-responsive">
+                        </a>
+                        <div>
+                            <a>
+                                <h1 (click)="openModalWithClass(template, product)" id="product-name">{{product.name}}
+                                </h1>
+                            </a>
+                        </div>
+                        <h2>{{product.unitPrice | currency:'USD'}} </h2>
+                        <div class="price">{{product.unitsInStock}}</div>
+                        <a href="#" class="primary-btn">Add to cart</a>
+                    </div>
+                </div>
+                <h3 *ngIf="products?.length == 0"> No products</h3>
+            </div>
+            <ng-template #template>
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">{{product.name}}</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{product.description}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+                </div>
+            </ng-template>
+
+            <div class="footer-pagination">
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-9" style="padding-left: 30%">
+                                <ngb-pagination [(page)]="thePageNumber" [pageSize]="thePageSize" [maxSize]="5"
+                                    [collectionSize]="theTotalElements" (pageChange)="listProducts()">
+                                </ngb-pagination>
+                            </div>
+                            <div class="col-md-3 mt-2" style="text-align:right">
+                                <span class="mr-2">Page Size</span>
+                                <select (change)="updatePageSize($any($event.target).value)">
+                                    <option value="2">2</option>
+                                    <option selected="true">5</option>
+                                    <option>10</option>
+                                    <option>15</option>
+                                    <option>50</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
